@@ -39,6 +39,9 @@ class Recipe:
     def to_json(self):
         """
         Convert the object to JSON format.
+
+        :return:
+            A JSON-compatible representation of the object.
         """
         # TODO: Return a dict representation.
 
