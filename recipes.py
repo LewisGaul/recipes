@@ -3,6 +3,7 @@ Create recipes and save/read them to/from file.
 """
 
 import json
+import logging
 
 
 class Recipe:
@@ -20,7 +21,8 @@ class Recipe:
         ingreds
             A list of ingredients required for the recipe. 
         """
-        # TODO: Store the name and list of ingredients on the new object.
+        self.name = name
+        self.ingreds = ingreds
 
     def __str__(self):
         """
@@ -30,13 +32,21 @@ class Recipe:
 
     def save(self):
         """
-        Save the recipe to file.
+        Save the recipe to file. If a recipe of the same name already exists a warning is logged and
+        this recipe is not saved.
         """
-        # TODO: Write the recipe to file in JSON format. See json.dump().
+        all_recipes = read_recipes()
+        if self.name in [r.name for r in all_recipes]:
+            logging.warning(f"Recipe with name '{self.name}' already exists, not saving")
+            return
+        all_recipes.append(self)
+        with open("data.json", "w") as f:
+            json.dump([r.to_json() for r in all_recipes], f)
 
 
 def read_recipes():
     """
     Read in all recipes we have stored on file.
     """
-    # TODO: Read the file of recipe data and return a list of recipes. See json.load().
+    with open("data.json", "r") as f:
+        return [Recipe.from_json(r) for r in json.load(f)]
