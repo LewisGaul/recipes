@@ -15,11 +15,10 @@ class Recipe:
         """
         Initialise the recipe instance.
 
-        Arguments:
-        name
+        :param name:
             The name of the recipe.
-        ingreds
-            A list of ingredients required for the recipe. 
+        :param ingreds:
+            A list of ingredients required for the recipe.
         """
         self.name = name
         self.ingreds = ingreds
@@ -42,12 +41,33 @@ class Recipe:
             return
         all_recipes.append(self)
         with open("data.json", "w") as f:
-            json.dump([r.to_json() for r in all_recipes], f)
+            json.dump([r.to_json() for r in all_recipes], f, indent=4)
+
+    def to_json(self):
+        """
+        Convert the object to JSON format.
+        """
+        return {"name": self.name, "ingredients": [str(i) for i in self.ingreds]}
+
+    @classmethod
+    def from_json(cls, obj):
+        """
+        Create an instance of the class from a JSON representation.
+
+        :param obj:
+            The JSON object.
+        :return:
+            The created class instance.
+        """
+        return cls(obj["name"], obj["ingredients"])
 
 
 def read_recipes():
     """
     Read in all recipes we have stored on file.
+
+    :return:
+        A list of the recipes found in the data file.
     """
     with open("data.json", "r") as f:
         return [Recipe.from_json(r) for r in json.load(f)]
