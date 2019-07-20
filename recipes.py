@@ -3,6 +3,7 @@ Create recipes and save/read them to/from file.
 """
 
 import json
+import logging
 
 
 class Recipe:
@@ -26,11 +27,13 @@ class Recipe:
         """
         Define how to print a recipe object.
         """
-        return f'Recipe "{self.name}"\n' + "\n - ".join(self.ingreds)
+        lines = [f'Recipe "{self.name}"'] + [f" - {i}" for i in self.ingreds]
+        return "\n".join(lines)
 
     def save(self):
         """
-        Save the recipe to file.
+        Save the recipe to file. If a recipe of the same name already exists a warning is logged and
+        this recipe is not saved.
         """
         # TODO: Write the recipe to file in JSON format. See json.dump().
 

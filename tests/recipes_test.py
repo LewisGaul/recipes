@@ -11,7 +11,7 @@ ingreds = ["tuna", "sweetcorn", "pasta"]
 def test_create_recipe():
     """Test creating a recipe works as expected."""
     recipe = Recipe("Tuna pasta", ingreds)
-    assert recipe.name == "recipe 1"
+    assert recipe.name == "Tuna pasta"
     assert recipe.ingreds == ingreds
 
 
