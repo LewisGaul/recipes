@@ -28,7 +28,8 @@ class Recipe:
         """
         Define how to print a recipe object.
         """
-        return f'Recipe "{self.name}"\n' + "\n - ".join(self.ingreds)
+        lines = [f'Recipe "{self.name}"'] + [f" - {i}" for i in self.ingreds]
+        return "\n".join(lines)
 
     def save(self):
         """
